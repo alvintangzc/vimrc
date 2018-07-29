@@ -18,6 +18,7 @@
 "    -> Visual mode related
 "    -> Moving around, tabs and buffers
 "    -> Status line
+"    -> Tags
 "    -> Editing mappings
 "    -> vimgrep searching and cope displaying
 "    -> Spell checking
@@ -263,6 +264,15 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Always show the status line
 set laststatus=2
 
+""""""""""""""""""""""""""""""
+" => Tags
+""""""""""""""""""""""""""""""
+let s:vim_tags = expand('~/.cache/tags')
+" 检测 ~/.cache/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -377,3 +387,4 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
+
