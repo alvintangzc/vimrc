@@ -51,6 +51,17 @@ Plug 'vim-scripts/a.vim'
 
 " svn git tools; fetch: https://github.com/mhinz/vim-signify
 Plug 'mhinz/vim-signify'
+
+" c++ highlight; fetch: https://github.com/octol/vim-cpp-enhanced-highlight
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+"replace plugin; fetch: https://github.com/brooth/far.vim
+Plug 'brooth/far.vim'
+
+" if use cquery see https://langserver.org/
+Plug 'valloric/youcompleteme'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
 " surroundings; fetch: https://github.com/tpope/vim-surround
 " Plug 'tpope/vim-surround'
 
@@ -122,7 +133,6 @@ let g:yankstack_yank_keys = ['y', 'd']
 
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>pp <Plug>yankstack_substitute_newer_paste
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-multiple-cursors
@@ -203,4 +213,14 @@ let g:gutentags_cache_dir = expand('~/.cache/tags')
 let g:gutentags_auto_add_gtags_cscope = 0
 
 let g:gutentags_define_advanced_commands = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-cpp-enhanced-highlight
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_concepts_highlight = 1
 
