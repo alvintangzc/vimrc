@@ -76,6 +76,8 @@ Plug 'mhinz/vim-startify'
 
 " ycm; fetch: https://github.com/valloric/youcompleteme
 Plug 'valloric/youcompleteme'
+
+
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
 
@@ -238,6 +240,11 @@ let g:ycm_key_list_previous_completion = ['<Up>']
 " 修改对C函数的补全快捷键，默认是CTRL + space，修改为ALT + ;
 let g:ycm_key_invoke_completion = '<M-;>'
 
+" 加入这个preview默认在下面展示，也会影响默认的sp
+set splitbelow
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_insertion= 1
+
 inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"  "回车即选中当前项
 "上下左右键的行为 会显示其他信息
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
@@ -335,3 +342,4 @@ else
 endif
 
 nnoremap <F4> :call OpenTerminal()<cr>
+
