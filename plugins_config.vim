@@ -74,6 +74,11 @@ Plug 'haya14busa/incsearch.vim'
 " first screen; fetch: https://github.com/mhinz/vim-startify
 Plug 'mhinz/vim-startify'
 
+" ultisnips ;fetch:https://github.com/SirVer/ultisnips
+Plug 'SirVer/ultisnips'
+" must below ultisnips code parameter notice, fetch:https://github.com/tenfyzhong/CompleteParameter.vim
+Plug 'tenfyzhong/CompleteParameter.vim'
+
 " ycm; fetch: https://github.com/valloric/youcompleteme
 Plug 'valloric/youcompleteme'
 
@@ -214,7 +219,7 @@ set completeopt=menu,menuone
 
 "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "Do not ask when starting vim
-let g:ycm_confirm_extra_conf = 0
+" let g:ycm_confirm_extra_conf = 0
 
 " 开启基于tag的补全，可以在这之后添加需要的标签路径  
 let g:ycm_collect_identifiers_from_tags_files=1
@@ -342,4 +347,17 @@ else
 endif
 
 nnoremap <F4> :call OpenTerminal()<cr>
+
+" snips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+"CompleteParameter
+inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+let g:complete_parameter_use_ultisnips_mapping = 1
+
+let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
+
 
