@@ -70,7 +70,7 @@ command W w !sudo tee % > /dev/null
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 20 lines to the cursor - when moving vertically using j/k
-set so=20
+set so=10
 
 " highlight cursor
 set cursorline
@@ -145,7 +145,7 @@ endif
 
 
 " Add a bit extra margin to the left
-" set foldcolumn=1
+set foldcolumn=1
 
 map  <silent>  <S-Insert>  "+p
 imap <silent>  <S-Insert>  <Esc>"+pa
@@ -328,7 +328,5 @@ map <leader>q :e ~/buffer<cr>
 " Quickly open a markdown buffer for scribble
 map <leader>x :e ~/buffer.md<cr>
 
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
 
 

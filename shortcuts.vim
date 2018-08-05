@@ -29,3 +29,6 @@ nmap <Leader>nn :call DisShowFormat()<CR>
 
 " 映射terminal
 tnoremap <Esc> <C-\><C-n>
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
