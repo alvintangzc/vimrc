@@ -74,7 +74,7 @@ set so=10
 
 " highlight cursor
 set cursorline
-set listchars=tab:\|.,space:.,trail:.
+set listchars=tab:\|.,trail:.
 " set cursorcolumn
 
 " Show line num
@@ -320,13 +320,12 @@ map <leader>s? z=
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+noremap <Leader>M mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Quickly open a buffer for scribble
 map <leader>q :e ~/buffer<cr>
 
 " Quickly open a markdown buffer for scribble
 map <leader>x :e ~/buffer.md<cr>
-
 
 

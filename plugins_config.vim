@@ -55,8 +55,14 @@ Plug 'brooth/far.vim'
 " surroundings; fetch: https://github.com/tpope/vim-surround
 Plug 'tpope/vim-surround'
 
+" indent line; fetch: https://github.com/nathanaelkane/vim-indent-guides
+Plug 'nathanaelkane/vim-indent-guides'
+
 " auto pair; fetch: https://github.com/jiangmiao/auto-pairs
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
+
+" tagbar; fetch: https://github.com/majutsushi/tagbar
+Plug 'majutsushi/tagbar'
 
 " gtags; fetch: https://github.com/ludovicchabant/vim-gutentags
 Plug 'ludovicchabant/vim-gutentags'
@@ -76,12 +82,17 @@ Plug 'mhinz/vim-startify'
 
 " ultisnips ;fetch:https://github.com/SirVer/ultisnips
 Plug 'SirVer/ultisnips'
+
 " must below ultisnips code parameter notice, fetch:https://github.com/tenfyzhong/CompleteParameter.vim
-Plug 'tenfyzhong/CompleteParameter.vim'
+"Plug 'tenfyzhong/CompleteParameter.vim'
 
 " ycm; fetch: https://github.com/valloric/youcompleteme
 Plug 'valloric/youcompleteme'
 
+" mul mark; fetch: https://github.com/vim-scripts/mark.vim
+Plug 'vim-scripts/mark.vim'
+
+Plug 'vim-scripts/YankRing.vim'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
@@ -101,7 +112,7 @@ set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 14
 " => vim-airline
 """"""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline_theme='bubblegum'
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
@@ -110,7 +121,6 @@ let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#tabline#fnametruncate = 16
 let g:airline#extensions#tabline#fnamecollapse = 2
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-
 
 """"""""""""""""""""""""""""""
 " => vim-easy-align
@@ -195,9 +205,11 @@ call g:quickmenu#append('1.2 EasyAlign', 'echo "vipga=\" -- 按=进行排列"', 
 call g:quickmenu#append('1.3 Surround', 'echo "cs\"'' -> change \" -> ''"', 'Surround')
 
 " section 2
-call g:quickmenu#append('# Misc', '')
+call g:quickmenu#append('# F键功能', '')
 
-call g:quickmenu#append('item 2.1', 'echo "2.1 is selected"', 'select item 2.1')
+call g:quickmenu#append('F4  打开终端', 'echo "show terminal"', 'F4-show-terminal')
+call g:quickmenu#append('F8  Tags列表', 'echo "show tags"', 'F8-show-tags')
+call g:quickmenu#append('F12 打开帮助', 'echo "show this"', 'F12-show-help')
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -226,7 +238,7 @@ let g:ycm_collect_identifiers_from_tags_files=1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 " 输入第2个字符开始补全
-let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_min_num_of_chars_for_completion=1
 " 开启语义补全
 let g:ycm_seed_identifiers_with_syntax=1
 "在注释输入中也能补全
@@ -243,12 +255,14 @@ let g:ycm_filetype_blacklist = {
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 " 修改对C函数的补全快捷键，默认是CTRL + space，修改为ALT + ;
-let g:ycm_key_invoke_completion = '<M-;>'
+let g:ycm_key_invoke_completion = '<C-;>'
+
+let g:ycm_max_diagnostics_to_display = 0
 
 " 加入这个preview默认在下面展示，也会影响默认的sp
 set splitbelow
 let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_insertion= 1
+let g:ycm_autoclose_preview_window_after_insertion= 0
 
 inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"  "回车即选中当前项
 "上下左右键的行为 会显示其他信息
@@ -258,9 +272,8 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " 跳转到定义处
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nnoremap <M-g> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>ji :YcmCompleter GoToImplementation<CR>
 nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
 "inoremap <leader><leader> <C-x><C-o>
 
@@ -296,7 +309,7 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 " 禁用 gutentags 自动加载 gtags 数据库的行为
-let g:gutentags_auto_add_gtags_cscope = 0
+let g:gutentags_auto_add_gtags_cscope = 1
 
 let g:gutentags_define_advanced_commands = 1
 
@@ -312,9 +325,13 @@ nmap <Leader>s <Plug>(easymotion-overwin-f2)
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
+" motions
+map <Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader>l <Plug>(easymotion-overwin-line)))
+
+nmap <Leader>j <Plug>(easymotion-overwin-w)
+xmap <Leader>j <Plug>(easymotion-bd-w)
+omap <Leader>j <Plug>(easymotion-bd-w)
 
 "incsearch
 " :h g:incsearch#auto_nohlsearch
@@ -350,14 +367,48 @@ nnoremap <F4> :call OpenTerminal()<cr>
 
 " snips
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
 "CompleteParameter
-inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-let g:complete_parameter_use_ultisnips_mapping = 1
+"inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+"let g:complete_parameter_use_ultisnips_mapping = 1
+"let g:complete_parameter_echo_signature = 1
 
-let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
-inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
+" let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+" inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
 
+nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+nmap <Leader>mn <Plug>MarkSearchCurrentNext
+nmap <Leader>mp <Plug>MarkSearchCurrentPrev
+
+nnoremap <Leader>//  <Plug>NERDCommenterToggle
+vnoremap <Leader>//  <Plug>NERDCommenterToggle
+
+" tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" indent
+let g:indent_guides_enable_on_vim_startup = 1
+
+" mhinz/vim-startify
+" gen by http://patorjk.com/software/taag/
+let g:startify_lists = [
+    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+    \ ]
+
+let g:startify_custom_header = [
+\'    ________  ___       ___      ___ ___  ________   _________  ________  ________   ________          ___      ___ ___  _____ ______      ',
+\'   |\   __  \|\  \     |\  \    /  /|\  \|\   ___  \|\___   ___|\   __  \|\   ___  \|\   ____\        |\  \    /  /|\  \|\   _ \  _   \    ',
+\'   \ \  \|\  \ \  \    \ \  \  /  / \ \  \ \  \\ \  \|___ \  \_\ \  \|\  \ \  \\ \  \ \  \___|        \ \  \  /  / \ \  \ \  \\\__\ \  \   ',
+\'    \ \   __  \ \  \    \ \  \/  / / \ \  \ \  \\ \  \   \ \  \ \ \   __  \ \  \\ \  \ \  \  ___       \ \  \/  / / \ \  \ \  \\|__| \  \  ',
+\'     \ \  \ \  \ \  \____\ \    / /   \ \  \ \  \\ \  \   \ \  \ \ \  \ \  \ \  \\ \  \ \  \|\  \       \ \    / /   \ \  \ \  \    \ \  \ ',
+\'      \ \__\ \__\ \_______\ \__/ /     \ \__\ \__\\ \__\   \ \__\ \ \__\ \__\ \__\\ \__\ \_______\       \ \__/ /     \ \__\ \__\    \ \__\',
+\'       \|__|\|__|\|_______|\|__|/       \|__|\|__| \|__|    \|__|  \|__|\|__|\|__| \|__|\|_______|        \|__|/       \|__|\|__|     \|__|',
+\ ]
 
