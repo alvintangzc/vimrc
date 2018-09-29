@@ -402,7 +402,7 @@ let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]
 
-let g:yankring_history_dir = '~/.config/'
+let g:yankring_history_dir = '~/.cache/'
 
 
 let g:startify_custom_header = [
