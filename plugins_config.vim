@@ -402,6 +402,9 @@ let g:startify_lists = [
     \ { 'type': 'commands',  'header': ['   Commands']       },
     \ ]
 
+let g:yankring_history_dir = '~/.cache/'
+
+
 let g:startify_custom_header = [
 \'    ________  ___       ___      ___ ___  ________   _________  ________  ________   ________          ___      ___ ___  _____ ______      ',
 \'   |\   __  \|\  \     |\  \    /  /|\  \|\   ___  \|\___   ___|\   __  \|\   ___  \|\   ____\        |\  \    /  /|\  \|\   _ \  _   \    ',
