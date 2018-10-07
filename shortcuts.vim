@@ -32,12 +32,6 @@ nmap <Leader>ds :call DisShowFormat()<CR>
 " 映射terminal
 tnoremap <Esc> <C-\><C-n>
 
-" Smart way to move between windows
-map <S-j> <C-W>j
-map <S-k> <C-W>k
-map <S-h> <C-W>h
-map <S-l> <C-W>l
-
 noremap <C-j> 20j
 inoremap <C-j> <ESC>20j
 

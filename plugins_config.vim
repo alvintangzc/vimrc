@@ -89,8 +89,8 @@ Plug 'SirVer/ultisnips'
 " ycm; fetch: https://github.com/valloric/youcompleteme
 Plug 'valloric/youcompleteme'
 
-" mul mark; fetch: https://github.com/vim-scripts/mark.vim
-Plug 'vim-scripts/mark.vim'
+" mul mark; fetch: https://github.com/mbriggs/mark.vim
+Plug 'mbriggs/mark.vim'
 
 Plug 'vim-scripts/YankRing.vim'
 
