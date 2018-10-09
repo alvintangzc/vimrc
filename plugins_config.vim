@@ -85,6 +85,10 @@ Plug 'ncm2/ncm2'
 " ncm2 requires nvim-yarp
 Plug 'roxma/nvim-yarp'
 
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
+
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
@@ -109,12 +113,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline_theme='bubblegum'
 let g:airline#extensions#tabline#formatter = 'default'
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#buffer_nr_show = 0
-let g:airline#extensions#tabline#fnametruncate = 16
-let g:airline#extensions#tabline#fnamecollapse = 2
-let g:airline#extensions#tabline#buffer_idx_mode = 1
 
 """"""""""""""""""""""""""""""
 " => vim-easy-align
@@ -137,15 +135,13 @@ let NERDTreeShowHidden = 0
 let NERDTreeIgnore     = ['\.pyc$', '\.o', '__pycache__']
 let g:NERDTreeWinSize  = 30
 map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark<Space>
-map <leader>nf :NERDTreeFind<cr>
 
 """"""""""""""""""""""""""""""
 " => fzf
 """"""""""""""""""""""""""""""
 let g:fzf_layout = { 'down': '~30%' }
 nnoremap <silent> <Leader>ff :Files<CR>
-nnoremap <silent> <Leader>fb :Buffers<CR>
+nnoremap <silent> <Leader>bl :Buffers<CR>
 nnoremap <silent> <Leader>fh :History<CR>
 
 command! -bang -nargs=* Ag
@@ -289,10 +285,7 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 nnoremap <silent> <C-]> :call LanguageClient#textDocument_definition()<CR>
 
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-set shortmess+=c
-
+"ncm2
 au TextChangedI * call ncm2#auto_trigger()
 
 inoremap <c-c> <ESC>
