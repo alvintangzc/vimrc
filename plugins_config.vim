@@ -58,7 +58,7 @@ Plug 'tpope/vim-surround'
 " indent line; fetch: https://github.com/nathanaelkane/vim-indent-guides
 Plug 'nathanaelkane/vim-indent-guides'
 " auto pair; fetch: https://github.com/jiangmiao/auto-pairs
-" Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 " indent line; fetch: https://github.com/Yggdroot/indentLine
 Plug 'Yggdroot/indentLine'
 
@@ -80,11 +80,14 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+" assuming your using vim-plug: https://github.com/junegunn/vim-plug
+Plug 'ncm2/ncm2'
+" ncm2 requires nvim-yarp
+Plug 'roxma/nvim-yarp'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'SirVer/ultisnips'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
@@ -284,25 +287,26 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-.>     <Plug>(neosnippet_expand_or_jump)
-smap <C-.>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-.>     <Plug>(neosnippet_expand_target)
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
 
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <expr><TAB>
- \ pumvisible() ? "\<C-n>" :
- \ neosnippet#expandable_or_jumpable() ?
- \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+au TextChangedI * call ncm2#auto_trigger()
 
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+inoremap <c-c> <ESC>
+
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" tab s-tab for moving in snippet
+imap <c-u> <Plug>(ultisnips_expand)
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<Tab>"
+let g:UltiSnipsJumpBackwardTrigger	= "<S-Tab>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " indent
 let g:indent_guides_enable_on_vim_startup = 1
