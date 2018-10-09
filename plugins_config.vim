@@ -294,8 +294,12 @@ nnoremap <F4> :call OpenTerminal()<cr>
 
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
 nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
-nmap <Leader>mk <Plug>MarkToggle 
 nmap <Leader>mc <Plug>MarkAllClear 
+nmap <Leader>mn <Plug>MarkSearchCurrentNext
+nmap <Leader>mp <Plug>MarkSearchCurrentPrev
+nmap <unique> <silent> <Leader>mk <Plug>MarkSet
+vmap <unique> <silent> <Leader>mk <Plug>MarkSet
+
 nnoremap <Leader>//  <Plug>NERDCommenterToggle
 vnoremap <Leader>//  <Plug>NERDCommenterToggle
 
