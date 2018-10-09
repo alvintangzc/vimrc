@@ -35,6 +35,6 @@ tnoremap <Esc> <C-\><C-n>
 noremap <C-j> 20j
 inoremap <C-j> <ESC>20j
 
-noremap <C-k> 20k
-inoremap <C-k> <ESC>20k
+"noremap <C-k> 20k
+"inoremap <C-k> <ESC>20k
 
