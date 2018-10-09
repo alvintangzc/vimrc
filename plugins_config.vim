@@ -31,7 +31,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " YankStack; fetches https://github.com/maxbrunsfeld/vim-yankstack
 Plug 'maxbrunsfeld/vim-yankstack'
 
-" Sublime Text's awesome multiple selection feature<Paste>; fetches https://github.com/terryma/vim-multiple-cursors
+" Sublime Text's awesome multiple selection feature; fetches https://github.com/terryma/vim-multiple-cursors
 Plug 'terryma/vim-multiple-cursors'
 
 " highlight yank area; fetch: https://github.com/machakann/vim-highlightedyank
@@ -39,12 +39,6 @@ Plug 'machakann/vim-highlightedyank'
 
 " quick menu; fetch: https://github.com/skywind3000/quickmenu.vim
 Plug 'skywind3000/quickmenu.vim'
-
-
-" tags ; fetch: https://github.com/ludovicchabant/vim-gutentags<Paste>
-"               https://github.com/skywind3000/gutentags_plus
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
 
 ".c .h switch; fetch: https://github.com/vim-scripts/a.vim
 Plug 'vim-scripts/a.vim'
@@ -59,7 +53,29 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'brooth/far.vim'
 
 " surroundings; fetch: https://github.com/tpope/vim-surround
-" Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
+
+" indent line; fetch: https://github.com/nathanaelkane/vim-indent-guides
+Plug 'nathanaelkane/vim-indent-guides'
+" auto pair; fetch: https://github.com/jiangmiao/auto-pairs
+" Plug 'jiangmiao/auto-pairs'
+" indent line; fetch: https://github.com/Yggdroot/indentLine
+Plug 'Yggdroot/indentLine'
+
+" motion move; fetch: https://github.com/easymotion/vim-easymotion
+Plug 'easymotion/vim-easymotion'
+
+" search increase; fetch: https://github.com/haya14busa/incsearch.vim
+Plug 'haya14busa/incsearch.vim'
+
+" first screen; fetch: https://github.com/mhinz/vim-startify
+Plug 'mhinz/vim-startify'
+
+" mul mark; fetch: https://github.com/mbriggs/mark.vim
+Plug 'mbriggs/mark.vim'
+
+Plug 'vim-scripts/YankRing.vim'
+
 
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/async.vim'
@@ -84,10 +100,15 @@ set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 14
 " => vim-airline
 """"""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline_theme='bubblegum'
-" let g:airline#extensions#tabline#formatter = 'unique_tail'
-
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#buffer_nr_show = 0
+let g:airline#extensions#tabline#fnametruncate = 16
+let g:airline#extensions#tabline#fnamecollapse = 2
+let g:airline#extensions#tabline#buffer_idx_mode = 1
 
 """"""""""""""""""""""""""""""
 " => vim-easy-align
@@ -103,7 +124,7 @@ nmap ga <Plug>(EasyAlign)
 """"""""""""""""""""""""""""""
 " autocmd vimenter * NERDTree | wincmd p
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0  && !exists("s:std_in") | exe 'NERDTree' | wincmd p | endif
+" autocmd VimEnter * if argc() == 0  && !exists("s:std_in") | exe 'NERDTree' | wincmd p | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeWinPos   = "right"
 let NERDTreeShowHidden = 0
@@ -164,19 +185,18 @@ noremap <silent><F12> :call quickmenu#toggle(0)<cr>
 " => quick menu
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " section 1, text starting with "#" represents a section (see the screen capture below)
-call g:quickmenu#append('# Develop', '')
+call g:quickmenu#append('# Common', '')
 
-call g:quickmenu#append('item 1.1', 'echo "1.1 is selected"', 'select item 1.1')
-call g:quickmenu#append('item 1.2', 'echo "1.2 is selected"', 'select item 1.2')
-call g:quickmenu#append('item 1.3', 'echo "1.3 is selected"', 'select item 1.3')
+call g:quickmenu#append('1.1 Yank', 'echo "<ctrl+r>\" -- paste to command"', 'Yank')
+call g:quickmenu#append('1.2 EasyAlign', 'echo "vipga=\" -- 按=进行排列"', 'EasyAlign')
+call g:quickmenu#append('1.3 Surround', 'echo "cs\"'' -> change \" -> ''"', 'Surround')
 
 " section 2
-call g:quickmenu#append('# Misc', '')
+call g:quickmenu#append('# F键功能', '')
 
-call g:quickmenu#append('item 2.1', 'echo "2.1 is selected"', 'select item 2.1')
-call g:quickmenu#append('item 2.2', 'echo "2.2 is selected"', 'select item 2.2')
-call g:quickmenu#append('item 2.3', 'echo "2.3 is selected"', 'select item 2.3')
-call g:quickmenu#append('item 2.4', 'echo "2.4 is selected"', 'select item 2.4')
+call g:quickmenu#append('F4  打开终端', 'echo "show terminal"', 'F4-show-terminal')
+call g:quickmenu#append('F8  Tags列表', 'echo "show tags"', 'F8-show-tags')
+call g:quickmenu#append('F12 打开帮助', 'echo "show this"', 'F12-show-help')
 
 
 
@@ -226,6 +246,57 @@ let g:cpp_class_decl_highlight = 1
 let g:cpp_experimental_simple_template_highlight = 1
 let g:cpp_concepts_highlight = 1
 
+" easy motion
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+" nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap <Leader>s <Plug>(easymotion-overwin-f)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+"incsearch
+" :h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+"  term
+if has('nvim')
+  fu! OpenTerminal()
+   " open split windows on the topleft
+   belowright split
+   " resize the height of terminal windows to 30
+   resize 10
+   :terminal
+  endf
+else
+  fu! OpenTerminal()
+   " open split windows on the topleft
+   belowright split
+   " resize the height of terminal windows to 30
+   resize 10
+   :call term_start('bash', {'curwin' : 1, 'term_finish' : 'close'})
+  endf
+endif
+
+nnoremap <F4> :call OpenTerminal()<cr>
+
+
+
+nnoremap <Leader>//  <Plug>NERDCommenterToggle
+vnoremap <Leader>//  <Plug>NERDCommenterToggle
+
+" 加入这个preview默认在下面展示，也会影响默认的sp
+set splitbelow
 
 if executable('cquery')
    au User lsp_setup call lsp#register_server({
@@ -250,3 +321,31 @@ let g:lsp_log_file = expand('~/vim-lsp.log')
 " for asyncomplete.vim log
 let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 " see more https://sarcasm.github.io/notes/dev/compilation-database.html
+
+
+" indent
+let g:indent_guides_enable_on_vim_startup = 1
+
+" mhinz/vim-startify
+" gen by http://patorjk.com/software/taag/
+let g:startify_lists = [
+    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+    \ ]
+
+let g:yankring_history_dir = '~/.cache/'
+
+
+let g:startify_custom_header = [
+\'  ██   █       ▄   ▄█    ▄           ▄   ▄█ █▀▄▀█  ',
+\'  █ █  █        █  ██     █           █  ██ █ █ █  ',
+\'  █▄▄█ █   █     █ ██ ██   █     █     █ ██ █ ▄ █  ',
+\'  █  █ ███▄ █    █ ▐█ █ █  █      █    █ ▐█ █   █  ',
+\'     █     ▀ █  █   ▐ █  █ █       █  █   ▐    █   ',
+\'    █         █▐      █   ██        █▐        ▀    ',
+\'   ▀          ▐                     ▐              ',
+\ ]
+

@@ -33,18 +33,30 @@
 " Sets how many lines of history VIM has to remember
 set history=500
 
-
-
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
+augroup checktime
+    au!
+    if !has("gui_running")
+        "silent! necessary otherwise throws errors when using command
+        "line window.
+        autocmd BufEnter        * silent! checktime
+        autocmd CursorHold      * silent! checktime
+        autocmd CursorHoldI     * silent! checktime
+        "these two _may_ slow things down. Remove if they do.
+        autocmd CursorMoved     * silent! checktime
+        autocmd CursorMovedI    * silent! checktime
+    endif
+augroup END
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = "\<Space>"
+" let mapleader = "\\"
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -57,15 +69,17 @@ command W w !sudo tee % > /dev/null
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+" Set 20 lines to the cursor - when moving vertically using j/k
+set so=10
 
 " highlight cursor
 set cursorline
+set listchars=tab:\|.,trail:.
 " set cursorcolumn
 
 " Show line num
 set nu
+set list
 
 " Avoid garbled characters in Chinese language windows OS
 let $LANG='en' 
@@ -89,7 +103,7 @@ set ruler
 set cmdheight=2
 
 " A buffer becomes hidden when it is abandoned
-set hid
+set nohidden
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -131,7 +145,7 @@ endif
 
 
 " Add a bit extra margin to the left
-" set foldcolumn=1
+set foldcolumn=1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -227,18 +241,8 @@ map <leader>ba :bufdo bd<cr>
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
-
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
-
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -263,15 +267,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
-
-""""""""""""""""""""""""""""""
-" => Tags
-""""""""""""""""""""""""""""""
-let s:vim_tags = expand('~/.cache/tags')
-" 检测 ~/.cache/tags 不存在就新建
-if !isdirectory(s:vim_tags)
-   silent! call mkdir(s:vim_tags, 'p')
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -323,7 +318,7 @@ map <leader>s? z=
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+noremap <Leader>M mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Quickly open a buffer for scribble
 map <leader>q :e ~/buffer<cr>
@@ -331,60 +326,4 @@ map <leader>q :e ~/buffer<cr>
 " Quickly open a markdown buffer for scribble
 map <leader>x :e ~/buffer.md<cr>
 
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    endif
-    return ''
-endfunction
-
-" Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
-
-    if buflisted(l:alternateBufNum)
-        buffer #
-    else
-        bnext
-    endif
-
-    if bufnr("%") == l:currentBufNum
-        new
-    endif
-
-    if buflisted(l:currentBufNum)
-        execute("bdelete! ".l:currentBufNum)
-    endif
-endfunction
-
-function! CmdLine(str)
-    call feedkeys(":" . a:str)
-endfunction 
-
-function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'gv'
-        call CmdLine("Ack '" . l:pattern . "' " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
 
