@@ -27,6 +27,12 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let g:iswindows = 0
+if(has("win32") || has("win64") || has("win16"))
+    let g:iswindows = 1
+endif
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -58,8 +64,6 @@ augroup END
 let mapleader = "\<Space>"
 " let mapleader = "\\"
 
-" Fast saving
-nmap <leader>w :w!<cr>
 
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)

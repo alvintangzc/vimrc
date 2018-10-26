@@ -76,14 +76,22 @@ Plug 'mbriggs/mark.vim'
 
 Plug 'vim-scripts/YankRing.vim'
 
+if(!g:iswindows)
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-" assuming your using vim-plug: https://github.com/junegunn/vim-plug
+else
+Plug 'jsfaint/gen_tags.vim'
+let g:loaded_gentags#gtags=1
+let g:gen_tags#use_cache_dir=0
+let g:gen_tags#verbose=1
+endif
+
 Plug 'ncm2/ncm2'
 " ncm2 requires nvim-yarp
 Plug 'roxma/nvim-yarp'
+
 
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
@@ -267,11 +275,9 @@ vmap <unique> <silent> <Leader>mk <Plug>MarkSet
 nnoremap <Leader>//  <Plug>NERDCommenterToggle
 vnoremap <Leader>//  <Plug>NERDCommenterToggle
 
-let g:deoplete#enable_at_startup = 1
-
 " 加入这个preview默认在下面展示，也会影响默认的sp
 set splitbelow
-
+if(!g:iswindows)
 let g:LanguageClient_serverCommands = {
     \ 'cpp': ['cquery',  '--log-file=~/.cache/log/cq.log',  '--init={"cacheDirectory":"~/.cache/cquery-cache/"}'],
     \ 'c': ['cquery',  '--log-file=~/.cache/log/cq.log',  '--init={"cacheDirectory":"~/.cache/cquery-cache/"}'],
@@ -284,7 +290,7 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 nnoremap <silent> <C-]> :call LanguageClient#textDocument_definition()<CR>
-
+endif
 "ncm2
 au TextChangedI * call ncm2#auto_trigger()
 
