@@ -81,12 +81,12 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-else
+endif
+
 Plug 'jsfaint/gen_tags.vim'
 let g:loaded_gentags#gtags=1
 let g:gen_tags#use_cache_dir=0
 let g:gen_tags#verbose=1
-endif
 
 Plug 'ncm2/ncm2'
 " ncm2 requires nvim-yarp
