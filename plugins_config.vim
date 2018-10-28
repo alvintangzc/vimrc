@@ -84,7 +84,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 endif
 
 Plug 'jsfaint/gen_tags.vim'
-let g:loaded_gentags#gtags=1
+" let g:loaded_gentags#gtags=1
 let g:gen_tags#use_cache_dir=0
 let g:gen_tags#verbose=1
 
@@ -157,7 +157,10 @@ command! -bang -nargs=* Ag
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
-nnoremap <silent> <Leader>ag :Ag<CR>
+
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+
+"<C-R><C-W> on the ':' command line to paste the word under cursor
 
 """"""""""""""""""""""""""""""
 " => YankStack
@@ -289,7 +292,7 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-nnoremap <silent> <C-]> :call LanguageClient#textDocument_definition()<CR>
+"nnoremap <silent> <C-]> :call LanguageClient#textDocument_definition()<CR>
 endif
 "ncm2
 au TextChangedI * call ncm2#auto_trigger()
