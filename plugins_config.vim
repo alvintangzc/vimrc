@@ -58,7 +58,7 @@ Plug 'tpope/vim-surround'
 " indent line; fetch: https://github.com/nathanaelkane/vim-indent-guides
 Plug 'nathanaelkane/vim-indent-guides'
 " auto pair; fetch: https://github.com/jiangmiao/auto-pairs
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 " indent line; fetch: https://github.com/Yggdroot/indentLine
 Plug 'Yggdroot/indentLine'
 
@@ -82,6 +82,14 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 endif
+
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
+let g:rainbow_conf = {
+    \'ctermfgs': ['lightyellow', 'lightblue', 'lightcyan', 'lightmagenta']
+\}
+
 
 Plug 'jsfaint/gen_tags.vim'
 let g:loaded_gentags#gtags=1
