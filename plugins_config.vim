@@ -58,12 +58,12 @@ Plug 'tpope/vim-surround'
 " indent line; fetch: https://github.com/nathanaelkane/vim-indent-guides
 Plug 'nathanaelkane/vim-indent-guides'
 
-if !exists('g:gui_oni')
+if (!exists('g:gui_oni'))
 " auto pair; fetch: https://github.com/jiangmiao/auto-pairs
+" trick: M-e
 Plug 'jiangmiao/auto-pairs'
 endif
 
-Plug 'ryanoasis/vim-devicons'
 
 " indent line; fetch: https://github.com/Yggdroot/indentLine
 Plug 'Yggdroot/indentLine'
