@@ -57,8 +57,14 @@ Plug 'tpope/vim-surround'
 
 " indent line; fetch: https://github.com/nathanaelkane/vim-indent-guides
 Plug 'nathanaelkane/vim-indent-guides'
+
+if !exists('g:gui_oni')
 " auto pair; fetch: https://github.com/jiangmiao/auto-pairs
-" Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
+endif
+
+Plug 'ryanoasis/vim-devicons'
+
 " indent line; fetch: https://github.com/Yggdroot/indentLine
 Plug 'Yggdroot/indentLine'
 
@@ -99,6 +105,10 @@ let g:gen_tags#verbose=1
 Plug 'ncm2/ncm2'
 " ncm2 requires nvim-yarp
 Plug 'roxma/nvim-yarp'
+
+Plug 'rhysd/clever-f.vim'
+map ; <Plug>(clever-f-repeat-forward)
+map , <Plug>(clever-f-repeat-back)
 
 
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -156,8 +166,8 @@ map <leader>nn :NERDTreeToggle<cr>
 " => fzf
 """"""""""""""""""""""""""""""
 let g:fzf_layout = { 'down': '~30%' }
-nnoremap <silent> <Leader>ff :Files<CR>
-nnoremap <silent> <Leader>bl :Buffers<CR>
+nnoremap <silent> <Leader>. :Files<CR>
+nnoremap <silent> <Leader>< :Buffers<CR>
 nnoremap <silent> <Leader>fh :History<CR>
 
 command! -bang -nargs=* Ag
